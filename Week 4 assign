@@ -1,0 +1,30 @@
+head(NEI) 
+##     fips      SCC Pollutant Emissions  type year
+## 4  09001 10100401  PM25-PRI    15.714 POINT 1999
+## 8  09001 10100404  PM25-PRI   234.178 POINT 1999
+## 12 09001 10100501  PM25-PRI     0.128 POINT 1999
+## 16 09001 10200401  PM25-PRI     2.036 POINT 1999
+## 20 09001 10200504  PM25-PRI     0.388 POINT 1999
+## 24 09001 10200602  PM25-PRI     1.490 POINT 1999
+tot.emissions.year <- NEI %>%  # Group by year and summarize total emissions across the board
+    group_by(year) %>%
+    summarize(Total.Emissions = sum(Emissions, na.rm = TRUE))
+
+tot.emissions.year
+## # A tibble: 4 x 2
+##    year Total.Emissions
+##   <int>           <dbl>
+## 1  1999         7332967
+## 2  2002         5635780
+## 3  2005         5454703
+## 4  2008         3464206
+with(tot.emissions.year, # plot data 
+     plot(x = year, 
+          y = Total.Emissions, 
+          ylab = "Total Annual Emissions [Tons]", 
+          xlab = "Year",
+          main = "Total Annual Emissions in the US by Year",
+          cex = 2,
+          pch = 2,
+          col = "red",
+          lwd = 3))
